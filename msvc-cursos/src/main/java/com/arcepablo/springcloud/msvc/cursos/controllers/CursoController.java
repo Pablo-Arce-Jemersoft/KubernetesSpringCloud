@@ -28,7 +28,7 @@ public class CursoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id) {
-        Optional<Curso> curso = cursoService.porId(id);
+        Optional<Curso> curso = cursoService.listarCursoConUsuarios(id);
 
         if(curso.isPresent()){
             return ResponseEntity.ok(curso.get());
@@ -101,7 +101,7 @@ public class CursoController {
     }
     
     @DeleteMapping("/desasignar-usuario/{cursoId}")
-    public ResponseEntity<?> desasignarUsuario (@Valid @RequestBody Usuario usuario, Long cursoId) {
+    public ResponseEntity<?> desasignarUsuario (@Valid @RequestBody Usuario usuario, @PathVariable Long cursoId) {
         Optional<Usuario> usuarioMsvc;
         try{
             usuarioMsvc = cursoService.eliminarUsuarioDeCurso(usuario, cursoId);
@@ -109,6 +109,12 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("errorMessage", e.getMessage()));
         }
         return usuarioMsvc.map(ResponseEntity::ok).orElseGet(() ->ResponseEntity.notFound().build());
+    }
+    
+    @DeleteMapping("/eliminar-usuario-curso/{id}")
+    public ResponseEntity<?> eliminarUsuarioCursoPorId(@PathVariable Long id) {
+        cursoService.eliminarUsuarioCursoPorId(id);
+        return ResponseEntity.noContent().build();
     }
     
     private static ResponseEntity<Map<String, String>> validate(BindingResult result) {

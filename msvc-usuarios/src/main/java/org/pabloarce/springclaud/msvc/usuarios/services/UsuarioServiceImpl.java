@@ -1,5 +1,6 @@
 package org.pabloarce.springclaud.msvc.usuarios.services;
 
+import org.pabloarce.springclaud.msvc.usuarios.client.CursoClientRest;
 import org.pabloarce.springclaud.msvc.usuarios.models.entity.Usuario;
 import org.pabloarce.springclaud.msvc.usuarios.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,12 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements UsuarioService{
 
     private final UsuarioRepository repository;
+    
+    private final CursoClientRest cursoClientRest;
 
-    public UsuarioServiceImpl(UsuarioRepository repository) {
+    public UsuarioServiceImpl(UsuarioRepository repository, CursoClientRest cursoClientRest) {
         this.repository = repository;
+        this.cursoClientRest = cursoClientRest;
     }
 
     @Override
@@ -39,10 +43,17 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Transactional
     public void eliminar(Long id) {
         repository.deleteById(id);
+        cursoClientRest.eliminarUsuarioCursoPorId(id);
     }
     
     @Override
     public Optional<Usuario> porEmail(String email) {
         return repository.findByEmail(email);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Usuario> findAllById(List<Long> ids) {
+        return (List<Usuario>) repository.findAllById(ids);
     }
 }
