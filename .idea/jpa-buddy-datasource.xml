@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JpbDataSourceConfig">
-    <data-sources>
-      <data-source id="886b69e7-a76c-4a5f-ac59-21208dc6a927" name="msvc_usuarios" url="jdbc:mysql://localhost:3306/msvc_usuarios" driverClass="com.mysql.cj.jdbc.Driver" />
-    </data-sources>
-  </component>
-</project>
