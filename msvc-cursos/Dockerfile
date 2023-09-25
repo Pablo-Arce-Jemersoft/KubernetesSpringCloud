@@ -22,3 +22,5 @@ EXPOSE 8002
 CMD ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 
 # docker run -p 8082:8082 --rm --name msvc-cursos --network spring cursos
+# docker pull postgres:14.9-alpine imagen de docker para postgres
+# docker run -d -p 5532:5432 --name postgres14 --network spring -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=msvc-cursos postgres:14.9-alpine
