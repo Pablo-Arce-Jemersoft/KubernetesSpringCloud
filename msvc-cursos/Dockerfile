@@ -24,5 +24,7 @@ CMD ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
 # docker build -t cursos:latest . -f .\msvc-cursos\Dockerfile
 # docker run -d -p 8002:8002 --rm --name msvc-cursos --network spring cursos
 # docker pull postgres:14.9-alpine imagen de docker para postgres
-# docker run -d -p 5532:5432 --name postgres14 --network spring -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=msvc_cursos postgres:14.9-alpine
+# agregar un volumen -v data-postges:/var/lib/postgesql/data
+# reiniciar container --restart=always
+# docker run -d -p 5532:5432 --name postgres14 --network spring -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=msvc_cursos -v data-postges:/var/lib/postgesql/data --restart=always postgres:14.9-alpine
 # docker start postgres14
