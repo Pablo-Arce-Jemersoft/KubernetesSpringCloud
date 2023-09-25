@@ -26,3 +26,7 @@ EXPOSE 8001
 #ENTRYPOINT ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 
 CMD ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
+
+# docker network create spring
+# docker run -p 8001:8001 -d --rm --name msvc-usuarios --network spring usuarios
+# docker container inspect msvc-usuarios
