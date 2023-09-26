@@ -1,6 +1,8 @@
+ARG MSVC_NAME=msvc-usuarios
+
 FROM openjdk:17-jdk-alpine AS builder
 
-ARG MSVC_NAME=msvc-usuarios
+ARG MSVC_NAME
 
 WORKDIR /app/$MSVC_NAME
 
@@ -17,9 +19,9 @@ RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-jdk-alpine
 
-ARG USERS=msvc-usuarios
+ARG MSVC_NAME
 ARG PORT_DEFAULT=8001
-ARG TARGET_FOLDER=$USERS/target
+ARG TARGET_FOLDER=$MSVC_NAME/target
 
 WORKDIR /app
 
