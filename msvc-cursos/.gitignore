@@ -12,12 +12,13 @@ target/
 .settings
 .springBeans
 .sts4-cache
-../curso-kubernetes.iml
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*.env
 
 ### NetBeans ###
 /nbproject/private/
