@@ -1,27 +1,33 @@
 FROM openjdk:17-jdk-alpine AS builder
 
-WORKDIR /app/msvc-usuarios
+ARG MSVC_NAME=msvc-usuarios
+
+WORKDIR /app/$MSVC_NAME
 
 COPY ./pom.xml /app
-COPY ./msvc-usuarios/.mvn ./.mvn
-COPY ./msvc-usuarios/mvnw .
-COPY ./msvc-usuarios/pom.xml .
+COPY ./$MSVC_NAME/.mvn ./.mvn
+COPY ./$MSVC_NAME/mvnw .
+COPY ./$MSVC_NAME/pom.xml .
 
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 
-COPY ./msvc-usuarios/src ./src
+COPY ./$MSVC_NAME/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-jdk-alpine
 
+ARG USERS=msvc-usuarios
+ARG PORT_DEFAULT=8001
+ARG TARGET_FOLDER=$USERS/target
+
 WORKDIR /app
 
 RUN mkdir ./logs
 
-COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/$TARGET_FOLDER/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
-ENV PORT_USUARIOS 8000
+ENV PORT_USUARIOS $PORT_DEFAULT
 
 EXPOSE $PORT_USUARIOS
 
@@ -43,3 +49,6 @@ CMD ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 # run container con --env-file
 # docker run -d -p 8001:8091 --env-file .\.env --rm --name msvc-usurios --network spring usuarios
 # docker run -d -p 8001:8091 --env-file .\.env --rm --name msvc_usuarios_container --network spring usuarios_image
+# utilizar arg para build de images flexible --build-arg PORT_DEFAULT=?
+# docker build -t usuarios_img . -f .\msvc-usuarios\Dockerfile --build-arg PORT_DEFAULT=8090
+# docker run -d -p 8001:8090 --rm --name usuarios_ps --network spring usuarios_img
