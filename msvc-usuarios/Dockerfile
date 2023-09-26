@@ -21,7 +21,9 @@ RUN mkdir ./logs
 
 COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
-EXPOSE 8001
+ENV PORT_USUARIOS 8000
+
+EXPOSE $PORT_USUARIOS
 
 #ENTRYPOINT ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 
@@ -38,3 +40,6 @@ CMD ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 # docker run -d -p 3307:3306 --name mysql8 --network spring -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=msvc_usuarios -v data-mysql:/var/lib/mysql --restart=always mysql:8
 # crear la base de datos en msql workbench con el puerto 3307
 # docker start mysql8
+# run container con --env-file
+# docker run -d -p 8001:8091 --env-file .\.env --rm --name msvc-usurios --network spring usuarios
+# docker run -d -p 8001:8091 --env-file .\.env --rm --name msvc_usuarios_container --network spring usuarios_image
