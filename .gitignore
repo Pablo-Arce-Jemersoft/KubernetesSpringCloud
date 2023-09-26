@@ -18,6 +18,7 @@ curso-kubernetes.iml
 *.iws
 *.iml
 *.ipr
+*.env
 
 ### NetBeans ###
 /nbproject/private/
