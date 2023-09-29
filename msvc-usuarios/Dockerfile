@@ -29,9 +29,9 @@ RUN mkdir ./logs
 
 COPY --from=builder /app/$TARGET_FOLDER/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
-ENV PORT_USUARIOS $PORT_DEFAULT
+ENV PORT $PORT_DEFAULT
 
-EXPOSE $PORT_USUARIOS
+EXPOSE $PORT
 
 #ENTRYPOINT ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
 
