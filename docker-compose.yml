@@ -23,17 +23,18 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: msvc_cursos
     volumes:
-      - data-postgres:/var/lib/postgesql/data
+      - data-postgres:/var/lib/postgresql/data
     restart: always
     networks:
       - spring
 
   msvc-usuarios:
     container_name: msvc-usuarios
+    image: pabloarcesoftwaredeveloper/usuarios:latest
 #    image: usuarios_img:latest
-    build:
-      context: ./
-      dockerfile: ./msvc-usuarios/Dockerfile
+#    build:
+#      context: ./
+#     dockerfile: ./msvc-usuarios/Dockerfile
     ports:
       - "8001:8001"
     env_file: ./msvc-usuarios/.env
@@ -45,10 +46,11 @@ services:
 
   msvc-cursos:
     container_name: msvc-cursos
+    image: pabloarcesoftwaredeveloper/cursos:latest
 #    image: cursos_img:latest
-    build:
-      context: ./
-      dockerfile: ./msvc-cursos/Dockerfile
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-cursos/Dockerfile
 
     ports:
       - "8002:8002"
